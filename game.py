@@ -1,5 +1,6 @@
 import pygame
 import time
+import helper
 
 def main():
     pygame.init()
@@ -33,7 +34,7 @@ def main():
     infoDelay = 2
 
     ## List of Pieces (Can Drag)
-    pieces = piece.loadPieces(fridgeImg, pantryImg)
+    pieces = helper.loadPieces(fridgeImg, pantryImg)
     active_piece = None # no box is being clicked
 
     run = True

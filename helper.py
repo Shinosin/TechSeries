@@ -2,7 +2,7 @@ import pygame
 
 class Piece:
     
-    def __init__(self, i, jpg, x, y, info):
+    def __init__(self, i, jpg, x, y, temp, info):
         self.index = i
 
         self.image = pygame.image.load(f'./images/{jpg}')
@@ -10,6 +10,7 @@ class Piece:
         self.rect = self.image.get_rect()
         self.target = pygame.Rect(x, y, self.rect.width + 15, self.rect.height + 15) # Buffer
         self.info = info
+        self.targetBgd = temp
 
     def setTargetBgd(self, location):
         self.targetBgd = location
