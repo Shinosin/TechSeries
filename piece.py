@@ -36,26 +36,25 @@ def loadPieces(fridge, pantry):
     fish = Piece(1, "fish.jpg", 70, 70, fridge, "fish also good")
     
     ### USE THIS AFT TXT OBTAINED
-    pieces = []
+    # pieces = []
 
-    # Open the file for reading
-    with open('pieces.txt', 'r') as file:
-        # Read all lines in the file
-        lines = file.readlines()
+    # # Open the file for reading
+    # with open('pieces.txt', 'r') as file:
+    #     # Read all lines in the file
+    #     lines = file.readlines()
 
-    # Process each line
-    for line in lines:
-        line = line.strip() # Strip any leading/trailing whitespace characters (like newlines)
-        var = line.split(',') # Split the line by commas
-        # Print the resulting list of variables
-        pieces.append(Piece(int(var[0]), var[1], int(var[2]), int(var[3]), var[4])) #id, jpg, x, y, desc
+    # # Process each line
+    # for line in lines:
+    #     line = line.strip() # Strip any leading/trailing whitespace characters (like newlines)
+    #     var = line.split(',') # Split the line by commas
+    #     # Print the resulting list of variables
+    #     pieces.append(Piece(int(var[0]), var[1], int(var[2]), int(var[3]), var[4])) #id, jpg, x, y, desc
 
-    ## Set Target Location
-    for i in range(5):
-        pieces[i].setTargetLocation(pantry)
+    # ## Set Target Location
+    # for i in range(5):
+    #     pieces[i].setTargetLocation(pantry)
     
-    for i in range(6):
-        pieces[i].setTargetLocation(fridge)
+    # for i in range(6):
+    #     pieces[i].setTargetLocation(fridge)
 
-
-    return [apple,fish]
+    return [apple, fish]

@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pygame Controller</title>
+    <title>My App</title>
 </head>
 <body>
-    <a href="/start_pygame">Start Game</a>
+    <form action = "/login" method="POST">
+        Username: <input type="text" placeholder="Enter Username" name="username" required>
+        Password: <input type="text" placeholder="Enter Password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
 
-    <button id="stop">Stop Pygame</button>
+    <a href="/create">Create Account</a>
+
+    <a href="/start_pygame">Play Game</a>
 
 </body>
 </html>
