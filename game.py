@@ -1,5 +1,4 @@
 import pygame
-import helper
 import time
 
 def main():
@@ -34,7 +33,7 @@ def main():
     infoDelay = 2
 
     ## List of Pieces (Can Drag)
-    pieces = helper.loadPieces(fridgeImg, pantryImg)
+    pieces = piece.loadPieces(fridgeImg, pantryImg)
     active_piece = None # no box is being clicked
 
     run = True
@@ -47,13 +46,11 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONUP:
                 if active_piece != None:
-
-                    if (active_piece.getTarget().colliderect(piece.getRect()) and # Piece placed in target position
-                            currentBgd == active_piece.getTargetBgd):
-                        pieces.pop(piece.index) # Remove from list -> Removes from screen
-                        infoText = piece.getInfo()
+                    if (active_piece.getTarget().colliderect(active_piece.getRect()) and # Piece placed in target position
+                            currentBgd == active_piece.getTargetBgd()):
+                        pieces.pop(active_piece.index) # Remove from list -> Removes from screen
+                        infoText = active_piece.getInfo()
                         showStartTime = time.time() # Time of putting object right
-                    
                     active_piece = None # No longer holding onto any piece
 
 
@@ -89,13 +86,18 @@ def main():
             if len(pieces) == 0: # All pieces have been put correctly
                 run = False
                 pygame.quit()
+                return # Exit Pygame
 
         else:
             infoText = "" # Clear message after delay
             showStartTime = None
 
-        for piece in pieces:
+        for piece in pieces: # Draw pieces
             screen.blit(piece.getImage(), piece.getRect())
 
+        ## Debugging Purposes
+        # pygame.draw.rect(screen, (128, 0, 0), pieces[0].target)
+        # pygame.draw.rect(screen, (128, 0, 0), pieces[1].target)
+        
         pygame.display.flip()
         pygame.time.Clock().tick(60) # Cap the frame rate
