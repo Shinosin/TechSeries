@@ -8,7 +8,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
     <style>
-
+        .small-button {
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            height: 50px;
+            width: 70px;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
     </style>
 </head>
 
@@ -39,6 +48,8 @@
             <br>
             <button type="submit">Submit Donation</button>
         </form>
+        <br>
+        <br>
         <button onclick="window.history.back()" class="small-button">Back</button>
     </div>
 </body>
