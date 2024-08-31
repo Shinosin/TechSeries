@@ -1,0 +1,74 @@
+# Byte-compiled files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environment
+venv/
+ENV/
+env/
+venv.bak/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+*.gz
+*.tar.gz
+*.zip
+
+# Logs
+*.log
+logs/
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables
+.env
+*.env
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Coverage reports
+.coverage
+*.cover
+*.py,cover
+nosetests.xml
+coverage.xml
+*.coveragerc
+*.nox/
+
+# Pytest cache
+.cache/
+
+# MyPy
+.mypy_cache/
+
+# Type hinting
+pyrightconfig.json
+
+# Pylint
+pylint.log
+
+# SQLAlchemy
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+
+# Flask
+instance/

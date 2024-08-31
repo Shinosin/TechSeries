@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if is_update %}Edit Food Item{% else %}Insert Food Item{% endif %}</title>
+</head>
+
+<body>
+    <h2>{% if is_update %}Edit Food Item{% else %}Insert a New Food Item{% endif %}</h2>
+
+    <!-- Display a success or error message if available -->
+    {% if msg %}
+    <p>{{ msg }}</p>
+    {% endif %}
+
+    <!-- Form for inserting or updating a food item -->
+    <form action="{% if is_update %}{{ url_for('editFoodItem') }}{% else %}{{ url_for('insertFoodItem') }}{% endif %}"
+        method="post">
+        
+        <label for="foodItemName">Food Item Name:</label><br>
+        <input type="text" id="foodItemName" name="foodItemName" value="{{ foodItemName }}" required><br><br>
+
+        <label for="expiryDate">Expiry Date:</label><br>
+        <input type="date" id="expiryDate" name="expiryDate" value="{{ expiryDate }}" required><br><br>
+
+        {% if is_update %}
+        <input type="hidden" name="rowid" value="{{ id }}">
+        {% endif %}
+
+        <input type="submit" value="{% if is_update %}Update{% else %}Submit{% endif %}">
+    </form>
+</body>
+
+</html>
