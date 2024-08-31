@@ -13,10 +13,12 @@ def main():
     pygame.display.set_caption('Drag And Drop')
 
     ## Background Image
-    fridgeImg = pygame.image.load('./images/fridge.jpg')
-    pantryImg = pygame.image.load('./images/pantry.jpg')
+    fridgeImg = pygame.image.load('./images/background/refrigerator .jpg')
+    pantryImg = pygame.image.load('./images/background/pantry(bright).jpg')
+    dpantryImg = pygame.image.load('./images/background/pantry(dark).jpg')
     fridgeImg = pygame.transform.scale(fridgeImg, (SCREEN_WIDTH, SCREEN_HEIGHT))
     pantryImg = pygame.transform.scale(pantryImg, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    dpantryImg = pygame.transform.scale(dpantryImg, (SCREEN_WIDTH, SCREEN_HEIGHT))
     currentBgd = fridgeImg
 
     ## Display Game Instructions
@@ -26,15 +28,16 @@ def main():
     locChangeRect.centerx = SCREEN_WIDTH // 2
 
     ## Display Information
-    bigFont = pygame.font.Font('freesansbold.ttf', 72)
+    bigFont = pygame.font.Font('freesansbold.ttf', 36)
     infoText = ""
+    MAX_WIDTH = 800
 
     # Timing to Display Information
     showStartTime = None
-    infoDelay = 2
+    infoDelay = 5
 
     ## List of Pieces (Can Drag)
-    pieces = helper.loadPieces(fridgeImg, pantryImg)
+    pieces = helper.loadPieces(fridgeImg, pantryImg, dpantryImg)
     active_piece = None # no box is being clicked
 
     run = True
@@ -65,6 +68,8 @@ def main():
                     # Change background when 'P' is pressed
                     if currentBgd == fridgeImg:
                         currentBgd = pantryImg
+                    elif currentBgd == pantryImg:
+                        currentBgd = dpantryImg
                     else:
                         currentBgd = fridgeImg
 
@@ -79,10 +84,14 @@ def main():
 
         ## Display Information after successfully placing a piece
         if showStartTime and currentTime - showStartTime <= infoDelay:
-            infoDisplay = bigFont.render(infoText, True, (0, 0, 128))
-            infoRect = infoDisplay.get_rect()
-            infoRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-            screen.blit(infoDisplay, infoRect)
+            wrapped_lines = helper.wrapText(infoText, bigFont, MAX_WIDTH)
+            
+            ## Draw Wrapped Text
+            y_offset = 200
+            for line in wrapped_lines:
+                infoDisplay = bigFont.render(line, True, (0, 0, 0))
+                screen.blit(infoDisplay, (200, y_offset))
+                y_offset += infoDisplay.get_height() + 32
 
             if len(pieces) == 0: # All pieces have been put correctly
                 run = False
@@ -95,10 +104,8 @@ def main():
 
         for piece in pieces: # Draw pieces
             screen.blit(piece.getImage(), piece.getRect())
-
-        ## Debugging Purposes
-        # pygame.draw.rect(screen, (128, 0, 0), pieces[0].target)
-        # pygame.draw.rect(screen, (128, 0, 0), pieces[1].target)
+            # if piece.index == 7: # for debugging
+            #     pygame.draw.rect(screen, (0,0,0), piece.getTarget()) 
         
         pygame.display.flip()
         pygame.time.Clock().tick(60) # Cap the frame rate

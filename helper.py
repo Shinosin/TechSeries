@@ -2,15 +2,12 @@ import pygame
 
 class Piece:
     
-    def __init__(self, i, jpg, x, y, temp, info):
+    def __init__(self, i, png, x, y):
         self.index = i
 
-        self.image = pygame.image.load(f'./images/{jpg}')
-        # self.image = pygame.transform.scale(self.image, (50, 50))
+        self.image = pygame.image.load(f'./images/food/{png}')
         self.rect = self.image.get_rect()
-        self.target = pygame.Rect(x, y, self.rect.width + 15, self.rect.height + 15) # Buffer
-        self.info = info
-        self.targetBgd = temp
+        self.target = pygame.Rect(x, y, self.rect.width, self.rect.height)
 
     def setTargetBgd(self, location):
         self.targetBgd = location
@@ -30,32 +27,68 @@ class Piece:
     def getImage(self):
         return self.image
     
-def loadPieces(fridge, pantry):
-    # for i in range(2): # 2 Objects total
-    ###### CONSDIER USING CSV
-    apple = Piece(0, 'apple.jpg', 300, 300, pantry, "apple is good")
-    fish = Piece(1, "fish.jpg", 70, 70, fridge, "fish also good")
+    def setInfo(self, info):
+        self.info = info
     
-    ### USE THIS AFT TXT OBTAINED
-    # pieces = []
+def loadPieces(fridge, pantry, dpantry):
+    pieces = []
 
-    # # Open the file for reading
-    # with open('pieces.txt', 'r') as file:
-    #     # Read all lines in the file
-    #     lines = file.readlines()
+    # Open the file for reading
+    with open('foodloop.txt', 'r') as file:
+        # Read all lines in the file
+        lines = file.readlines()
 
-    # # Process each line
-    # for line in lines:
-    #     line = line.strip() # Strip any leading/trailing whitespace characters (like newlines)
-    #     var = line.split(',') # Split the line by commas
-    #     # Print the resulting list of variables
-    #     pieces.append(Piece(int(var[0]), var[1], int(var[2]), int(var[3]), var[4])) #id, jpg, x, y, desc
+    # Process each line
+    for line in lines:
+        line = line.strip() # Strip any leading/trailing whitespace characters (like newlines)
+        var = line.split(',') # Split the line by commas
+        # Print the resulting list of variables
+        pieces.append(Piece(int(var[0]), var[1], int(var[2]), int(var[3]))) #id, jpg, x, y
 
-    # ## Set Target Location
-    # for i in range(5):
-    #     pieces[i].setTargetLocation(pantry)
+    ## Set Description
+    with open ('desc.txt', 'r') as f:
+        lines = f.readlines()
+
+    ## Process each line
+    for num, line in enumerate(lines):
+        line = line.strip()
+        pieces[num].setInfo(line)
+
+    ## Set Target Location
+    for i in range(7):
+        pieces[i].setTargetBgd(fridge)
+
+    for i in range(7, 12):
+        pieces[i].setTargetBgd(dpantry)
+
+    for i in range(12, 15):
+        pieces[i].setTargetBgd(pantry)
     
-    # for i in range(6):
-    #     pieces[i].setTargetLocation(fridge)
+    return pieces
 
-    return [apple, fish]
+def wrapText(text, font, max_width):
+    """Wrap text for a given width using the specified font."""
+    words = text.split(' ')
+    lines = []
+    current_line = ''
+    
+    for word in words:
+        # Create a line of text including the new word
+        test_line = f'{current_line} {word}'.strip()
+        # Measure the width of the text
+        test_surface = font.render(test_line, True, (0, 0, 0))
+        test_width = test_surface.get_width()
+        
+        if test_width <= max_width:
+            # If the line fits, add the word to the current line
+            current_line = test_line
+        else:
+            # Otherwise, add the current line to the list and start a new line
+            lines.append(current_line)
+            current_line = word
+    
+    # Add the last line
+    if current_line:
+        lines.append(current_line)
+    
+    return lines
