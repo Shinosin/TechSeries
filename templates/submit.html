@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate Food</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
+
 <body>
     <header>
         <h1>Food Donation</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="submit.html">Donate Food</a></li>
-                <li><a href="criteria.html">Donation Criteria</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/submit">Donate Food</a></li>
+                <li><a href="/criteria">Donation Criteria</a></li>
             </ul>
         </nav>
     </header>
-    <h1>Donate Food</h1>
-    <form id="donationForm" action="submit.html" method="POST">
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Food Item Name</th>
-                <th>Expiry Date</th>
-                <th colspan="2">Actions</th>
-            </tr>
-            {% for row in rows %}
-            <tr>
-                <td>{{ row['id'] }}</td>
-                <td>{{ row['foodItemName'] }}</td>
-                <td>{{ row['expiryDate'] }}</td>  
-                <td><!-- Add action buttons or links here if needed --></td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div class="div1">
+        <h1>Donate Food</h1>
+        <form id="donationForm" action="{{ url_for('submit') }}" method="POST">
+            <h2>Select Items to Donate</h2>
 
-        <button type="submit">Submit Donation</button>
-    </form>
+            {% for row in rows %}
+            <div>
+                <input type="checkbox" id="{{ row['id'] }}" name="items" value="{{ row['id'] }}">
+                <label for="{{ row['id'] }}">{{ row['foodItemName'] }} (Expires: {{ row['expiryDate'] }})</label>
+            </div>
+            {% endfor %}
+
+
+            <br>
+            <button type="submit">Submit Donation</button>
+        </form>
+    </div>
 </body>
+
 </html>

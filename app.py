@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for, session
 import game
 import sqlite3
 
@@ -245,8 +245,12 @@ def login():
         con.close()
 
 
+
+
+
 # The below section are for pages and function related to food donation
 # For pages
+# route to the page to display
 @app.route('/submitDonation')
 def submitDonatioForm():
     # Connect to the SQLite3 database and SELECT the necessary data
@@ -263,45 +267,40 @@ def submitDonatioForm():
     return render_template("submit.html", rows=rows)
 
 
-# # Route to add a new record (INSERT) food item data to the database
-# @app.route("/insertFoodItem", methods=['POST', 'GET'])
-# def insertFoodItem():
-#     msg = ""  # Initialize msg to avoid reference before assignment
+# Route for submitting the form -- the action of submitting excuted
+@app.route('/submit', methods=['GET', 'POST'])
+def submit():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row  # This allows accessing columns by name
 
-#     # Data will be available from POST submitted by the form
-#     if request.method == 'POST':
-#         try:
-#             # Get the food item name and expiry date from the form
-#             foodItemName = request.form['foodItemName']
-#             expiryDate = request.form['expiryDate']
+    if request.method == 'POST':
+        selected_item_ids = request.form.getlist('items')  # Fixed 'row' to 'items'
 
-#             # Connect to SQLite3 database and execute the INSERT
-#             with sqlite3.connect('database.db') as con:
-#                 cur = con.cursor()
-#                 cur.execute("INSERT INTO foodItem (foodItemName, expiryDate) VALUES (?, ?)", (foodItemName, expiryDate))
+        # Fetch the selected items for display on the success page
+        selected_items = []
+        for item_id in selected_item_ids:
+            cursor = conn.execute('SELECT * FROM foodItem WHERE id = ?', (item_id,))
+            item = cursor.fetchone()
+            if item:
+                selected_items.append(dict(item))
 
-#                 con.commit()
-#                 msg = "Record successfully added to database"
-#         except:
-#             con.rollback()
-#             msg = "Error in the INSERT"
-#         finally:
-#             con.close()
-#             # Send the transaction message to result.html
-#             # After processing POST request, return response
-#         return redirect("/displayFoodItemList")
-#         # return render_template('result.html', msg=msg)
+        # Delete selected items from the inventory (database)
+        for item_id in selected_item_ids:
+            conn.execute('DELETE FROM foodItem WHERE id = ?', (item_id,))
+        conn.commit()
+        conn.close()
 
-#     # Render the form if the request method is GET
-#     return render_template('insertFoodItem.html')
+        return render_template('success.html', rows=selected_items)
 
-@app.route('/donationSuccess')
-def submitSuccess():
-    return render_template('success.html')
+    # If GET request, fetch the inventory data
+    inventory = conn.execute('SELECT * FROM foodItem').fetchall()
+    conn.close()
+    return render_template('submit.html', rows=inventory)
 
 
-@app.route('/donationCriteria')
-def donationCriteria():
+
+@app.route('/criteria')
+def criteria():
     return render_template('criteria.html')
 
 

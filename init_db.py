@@ -25,6 +25,15 @@ CREATE TABLE IF NOT EXISTS user (
 ''')
 print("Created user table successfully!")
 
+cursor.execute('''
+CREATE TABLE inventory (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    expiry_date TEXT NOT NULL
+)          
+''')
+print("Created inventory table successfully!")
+
 # Commit the changes
 conn.commit()
 
