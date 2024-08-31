@@ -162,7 +162,7 @@ def delete():
         finally:
             con.close()
             # Send the transaction message to result.html
-            return render_template('result.html', msg=msg)
+            return redirect("/displayFoodItemList")
 
 
 # The below section are for pages and function related to user
