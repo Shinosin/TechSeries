@@ -1,38 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <h1>Expiry Date Tracker</h1>
-    <div class="login-container">
-        <h2>Login</h2>
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
-        <form action="{{ url_for('login') }}" method="POST">
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="login-btn">Login</button>
-        </form>
-    </div>
-</body>
-=======
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Authentication</title>
+    <title>My Website - Create Account</title>
     <style>
         /* Global Styles */
         body {
@@ -78,7 +50,7 @@
             position: absolute;
             top: 10px;
             left: 15px;
-            height: 40px;
+            height: auto;
             width: auto;
         }
 
@@ -91,7 +63,7 @@
             padding: 20px;
         }
 
-        /* Container for the Login Form */
+        /* Container for the Registration Form */
         .container {
             width: 400px;
             padding: 30px;
@@ -116,7 +88,8 @@
         }
 
         input[type="text"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="email"] {
             width: 95%;
             padding: 12px 14px 12px 5px;
             margin-bottom: 15px;
@@ -147,7 +120,7 @@
         }
 
         p a {
-            color: #5cb85c;
+            color: lightpink;
             text-decoration: none;
         }
 
@@ -164,35 +137,45 @@
 </head>
 
 <body>
+
+    <!-- Navigation Bar -->
     <div class="navbar">
         <a href="/">Home</a>
         <a href="/register">Register</a>
         <a href="/login">Login</a>
     </div>
 
-    <!-- Main Content Area to Center the Login Box -->
+    <!-- Main Content Area -->
     <div class="main-content">
         <div class="container">
-            <h2>Login</h2>
+            <h2>Create Your Account</h2>
+
             <!-- Display the error message if it exists -->
             {% if error %}
             <p class="error">{{ error }}</p>
             {% endif %}
-            <form action="/api/login" method="POST">
+
+            <form action="/api/register" method="POST">
+
                 <label for="email">Email</label>
-                <input type="text" id="email" name="email" required>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-                <button type="submit">Login</button>
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password"
+                    required>
+
+                <button type="submit">Create Account</button>
             </form>
 
+            <p>Already have an account? <a href="/login">Log in here</a></p>
         </div>
     </div>
 
 
+
 </body>
 
->>>>>>> Login_register_CRUDfoodItem_complete
 </html>

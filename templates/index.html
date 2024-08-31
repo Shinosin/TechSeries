@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "layout.html" %}
 
 {% block title %}
@@ -9,3 +10,144 @@ Index
         <h1>GAME</h1>
     </div>
 {% endblock %}
+=======
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>My App</title>
+</head>
+
+<body>
+    <a href="/register">Create Account</a>
+
+    <a href="/start_pygame">Play Game</a>
+
+    <a href="/insertFoodItemForm">Insert a New Food Item</a> -->
+
+<!-- Link to display the list of food items -->
+<!-- <h3>Existing Food Items</h3>
+    <a href="{{ url_for('getAllFoodItems') }}">View All Food Items</a>
+ -->
+
+<!-- Food donation -->
+<!-- <li><a href="/submitDonation">Donate Food</a></li>
+    <li><a href="/donationCriteria">Donation Criteria</a></li>
+
+
+
+</body>
+
+</html>  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container for the Content */
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #666;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Style for Links */
+        a {
+            display: block;
+            text-decoration: none;
+            color: pink;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        a:hover {
+            background-color: pink;
+            color: #ffffff;
+        }
+
+        /* List Style */
+        li {
+            list-style-type: none;
+        }
+
+        /* Specific Link Styles */
+        .primary-link {
+            background-color: pink;
+            color: #ffffff;
+            margin-top: 20px;
+        }
+
+        .primary-link:hover {
+            background-color: lightpink;
+        }
+
+        .secondary-link {
+            background-color: pink;
+            color: #ffffff;
+        }
+
+        .secondary-link:hover {
+            background-color: lightpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome</h1>
+
+        <a class="primary-link" href="/register">Create Account</a>
+
+        <a class="secondary-link" href="/start_pygame">Play Game</a>
+
+        <a class="secondary-link" href="/insertFoodItemForm">Insert a New Food Item</a>
+
+        <!-- Section for Existing Food Items -->
+        <h3>Existing Food Items</h3>
+        <a href="{{ url_for('getAllFoodItems') }}">View All Food Items</a>
+
+        <!-- Food Donation Section -->
+        <h3>Food Donation</h3>
+        <li><a href="/submitDonation">Donate Food</a></li>
+        <li><a href="/criteria">Donation Criteria</a></li>
+    </div>
+</body>
+
+</html>
+>>>>>>> Login_register_CRUDfoodItem_complete
