@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Food</title>
+    <script>
+        // Function to validate the form before submission
+        function validateForm(event) {
+            const criteriaYes = document.getElementById('criteria_yes');
+            const criteriaNo = document.getElementById('criteria_no');
+
+            if (criteriaNo.checked) {
+                // Prevent form submission and show alert
+                event.preventDefault();  // Prevent form from submitting
+                alert("The item does not meet donation criteria. Please review and submit again.");
+            }
+        }
+
+        // Add event listener to the form
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('donationForm');
+            form.addEventListener('submit', validateForm);
+        });
+    </script>
+</head>
+<body>
+    <h1>Donate Food</h1>
+    <form id="donationForm" action="{{ url_for('submit') }}" method="POST">
+        <h2>Select Items to Donate</h2>
+        {% for item in inventory %}
+            <div>
+                <input type="checkbox" id="item{{ item.id }}" name="item" value="{{ item.id }}">
+                <label for="item{{ item.id }}">{{ item.name }} (Expires: {{ item.expiry_date }})</label>
+            </div>
+        {% endfor %}
+
+        <h2>Donation Criteria</h2>
+        <label>Does this item meet the donation criteria?</label><br>
+        <input type="radio" id="criteria_yes" name="donation_criteria" value="yes" required>
+        <label for="criteria_yes">Yes</label><br>
+        <input type="radio" id="criteria_no" name="donation_criteria" value="no" required>
+        <label for="criteria_no">No</label><br>
+
+        <button type="submit">Submit Donation</button>
+    </form>
+</body>
+</html>
