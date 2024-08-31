@@ -1,5 +1,9 @@
-from flask import Flask, render_template, request
+# main file - login + authentication, home page with nasty UI
+# - missing routes for exptracking, donation and family account thing
+
+from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
 
 app = Flask(__name__)
 
@@ -25,7 +29,6 @@ def login():
 def index():
     '''Home Page'''
     return render_template('index.html')
-
 
 #add new users
 # password = "newuserpassword"
