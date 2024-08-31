@@ -30,6 +30,15 @@
             color: lightpink;
             margin-bottom: 20px;
         }
+
+        a {
+            color: lightpink;
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -37,6 +46,7 @@
     <div class="container">
         <h2>Welcome, {{ email }}!</h2>
         <p>You have successfully logged in.</p>
+        <a class="/index" href="/">Back to Home</a>
     </div>
 </body>
 

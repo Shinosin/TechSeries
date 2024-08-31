@@ -4,13 +4,15 @@ import sqlite3
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 # @app.route('/login')
 # def login():
-#     return 
+#     return
+
 
 @app.route('/start_pygame')
 def start_pygame():
@@ -25,11 +27,14 @@ def start_pygame():
 def insert_food_item_form():
     return render_template('insertFoodItemForm.html')
 
+
 @app.route('/result')
 def displayResults():
     return render_template('result.html')
 
 # Route to add a new record (INSERT) food item data to the database
+
+
 @app.route("/insertFoodItem", methods=['POST', 'GET'])
 def insertFoodItem():
     msg = ""  # Initialize msg to avoid reference before assignment
@@ -44,7 +49,8 @@ def insertFoodItem():
             # Connect to SQLite3 database and execute the INSERT
             with sqlite3.connect('database.db') as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO foodItem (foodItemName, expiryDate) VALUES (?, ?)", (foodItemName, expiryDate))
+                cur.execute(
+                    "INSERT INTO foodItem (foodItemName, expiryDate) VALUES (?, ?)", (foodItemName, expiryDate))
 
                 con.commit()
                 msg = "Record successfully added to database"
@@ -62,37 +68,39 @@ def insertFoodItem():
     return render_template('insertFoodItem.html')
 
 
-# Route to SELECT all data from the database and display in a table      
+# Route to SELECT all data from the database and display in a table
 @app.route('/displayFoodItemList')
 def getAllFoodItems():
-    # Connect to the SQLite3 datatabase and 
+    # Connect to the SQLite3 datatabase and
     # SELECT rowid and all Rows from the students table.
     con = sqlite3.connect("database.db")
     con.row_factory = sqlite3.Row
 
     cur = con.cursor()
-    cur.execute("SELECT id, foodItemName, expiryDate FROM foodItem ORDER BY expiryDate ASC")
+    cur.execute(
+        "SELECT id, foodItemName, expiryDate FROM foodItem ORDER BY expiryDate ASC")
 
     rows = cur.fetchall()
     con.close()
     # Send the results of the SELECT to the list.html page
-    return render_template("result.html",rows=rows)
+    return render_template("result.html", rows=rows)
 
 
-# Route that will SELECT a specific row in the database then load an Edit form 
+# Route that will SELECT a specific row in the database then load an Edit form
 @app.route("/editForm", methods=['POST'])
 def editForm():
     if request.method == 'POST':
         try:
             # Use the hidden input value of id from the form to get the rowid
             rowid = request.form['id']
-            
+
             # Connect to the database and SELECT a specific row by rowid
             with sqlite3.connect('database.db') as con:
                 con.row_factory = sqlite3.Row
                 cur = con.cursor()
-                cur.execute("SELECT id, foodItemName, expiryDate FROM foodItem WHERE id=?", (rowid,))
-                
+                cur.execute(
+                    "SELECT id, foodItemName, expiryDate FROM foodItem WHERE id=?", (rowid,))
+
                 row = cur.fetchone()
                 if row:
                     return render_template('insertFoodItemForm.html', is_update=True, foodItemName=row['foodItemName'], expiryDate=row['expiryDate'], id=row['id'])
@@ -102,7 +110,6 @@ def editForm():
             return f"An error occurred: {str(e)}"
 
 
-        
 # Route used to execute the UPDATE statement on a specific record in the database
 @app.route("/editFoodItem", methods=['POST', 'GET'])
 def editFoodItem():
@@ -117,7 +124,8 @@ def editFoodItem():
             # Connect to the database and update the specific record
             con = sqlite3.connect('database.db')
             cur = con.cursor()
-            cur.execute("UPDATE foodItem SET foodItemName=?, expiryDate=? WHERE id=?", (foodItemName, expiryDate, rowid))
+            cur.execute("UPDATE foodItem SET foodItemName=?, expiryDate=? WHERE id=?",
+                        (foodItemName, expiryDate, rowid))
 
             con.commit()
             msg = "Record successfully edited in the database"
@@ -133,20 +141,20 @@ def editFoodItem():
             # return render_template('result.html', msg=msg)
 
 
-# Route used to DELETE a specific record in the database    
-@app.route("/deleteFoodItem", methods=['POST','GET'])
+# Route used to DELETE a specific record in the database
+@app.route("/deleteFoodItem", methods=['POST', 'GET'])
 def delete():
     if request.method == 'POST':
         try:
-             # Use the hidden input value of id from the form to get the rowid
+            # Use the hidden input value of id from the form to get the rowid
             rowid = request.form['id']
             # Connect to the database and DELETE a specific record based on rowid
             with sqlite3.connect('database.db') as con:
-                    cur = con.cursor()
-                    cur.execute("DELETE FROM foodItem WHERE rowid="+rowid)
+                cur = con.cursor()
+                cur.execute("DELETE FROM foodItem WHERE rowid="+rowid)
 
-                    con.commit()
-                    msg = "Record successfully deleted from the database"
+                con.commit()
+                msg = "Record successfully deleted from the database"
         except:
             con.rollback()
             msg = "Error in the DELETE"
@@ -154,18 +162,7 @@ def delete():
         finally:
             con.close()
             # Send the transaction message to result.html
-            return render_template('result.html',msg=msg)
-    
-
-
-
-
-
-
-
-
-
-
+            return render_template('result.html', msg=msg)
 
 
 # The below section are for pages and function related to user
@@ -177,6 +174,7 @@ def delete():
 @app.route('/register', methods=['GET'])
 def show_register_form():
     return render_template('register.html')
+
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -199,7 +197,8 @@ def register():
             return render_template('register.html', error="Email already exists")
 
         # Insert the new user into the database
-        cur.execute("INSERT INTO user (email, password) VALUES (?, ?)", (email, password))
+        cur.execute(
+            "INSERT INTO user (email, password) VALUES (?, ?)", (email, password))
         con.commit()
     except Exception as e:
         con.rollback()
@@ -209,7 +208,6 @@ def register():
 
     print(f"Registered user: {email}, Password: {password}")
     return render_template('register_success.html', email=email)
-
 
 
 @app.route('/login', methods=['GET'])
@@ -226,7 +224,8 @@ def login():
         return render_template('login.html', error="Email and password are required")
 
     con = sqlite3.connect('database.db')
-    con.row_factory = sqlite3.Row  # This ensures that rows can be accessed like dictionaries
+    # This ensures that rows can be accessed like dictionaries
+    con.row_factory = sqlite3.Row
     cur = con.cursor()
 
     try:
@@ -238,25 +237,25 @@ def login():
             return render_template('welcome.html', email=email)
         else:
             return render_template('login.html', error="Invalid email or password")
-        
+
     except Exception as e:
         return f"An error occurred: {str(e)}", 500
-    
+
     finally:
         con.close()
-
 
 
 # The below section are for pages and function related to food donation
 # For pages
 @app.route('/submitDonation')
 def submitDonatioForm():
-     # Connect to the SQLite3 database and SELECT the necessary data
+    # Connect to the SQLite3 database and SELECT the necessary data
     con = sqlite3.connect("database.db")
     con.row_factory = sqlite3.Row
 
     cur = con.cursor()
-    cur.execute("SELECT id, foodItemName, expiryDate FROM foodItem ORDER BY expiryDate ASC")
+    cur.execute(
+        "SELECT id, foodItemName, expiryDate FROM foodItem ORDER BY expiryDate ASC")
 
     rows = cur.fetchall()
     con.close()
@@ -299,6 +298,7 @@ def submitDonatioForm():
 @app.route('/donationSuccess')
 def submitSuccess():
     return render_template('success.html')
+
 
 @app.route('/donationCriteria')
 def donationCriteria():
