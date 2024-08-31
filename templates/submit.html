@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Food</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Food Donation</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="submit.html">Donate Food</a></li>
+                <li><a href="criteria.html">Donation Criteria</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Donate Food</h1>
+    <form id="donationForm" action="submit.html" method="POST">
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Food Item Name</th>
+                <th>Expiry Date</th>
+                <th colspan="2">Actions</th>
+            </tr>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row['id'] }}</td>
+                <td>{{ row['foodItemName'] }}</td>
+                <td>{{ row['expiryDate'] }}</td>  
+                <td><!-- Add action buttons or links here if needed --></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <button type="submit">Submit Donation</button>
+    </form>
+</body>
+</html>

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My App</title>
 </head>
+
 <body>
-    <form action = "/login" method="POST">
+    <form action="/login" method="POST">
         Username: <input type="text" placeholder="Enter Username" name="username" required>
         Password: <input type="text" placeholder="Enter Password" name="password" required>
         <button type="submit">Login</button>
@@ -14,5 +16,19 @@
 
     <a href="/start_pygame">Play Game</a>
 
+    <a href="/insertFoodItemForm">Insert a New Food Item</a>
+
+    <!-- Link to display the list of food items -->
+    <h3>Existing Food Items</h3>
+    <a href="{{ url_for('getAllFoodItems') }}">View All Food Items</a>
+
+
+    <!-- Food donation -->
+    <li><a href="/submitDonation">Donate Food</a></li>
+    <li><a href="/donationCriteria">Donation Criteria</a></li>
+
+
+
 </body>
+
 </html>
