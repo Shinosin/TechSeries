@@ -39,6 +39,19 @@
         a:hover {
             text-decoration: underline;
         }
+
+        .small-button {
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            height: 50px;
+            width: 70px;
+            position: relative;
+            left: 0;
+            top: 0;
+            color: white;
+            background-color: lightpink;
+        }
     </style>
 </head>
 
@@ -47,6 +60,8 @@
         <h2>Welcome, {{ email }}!</h2>
         <p>You have successfully logged in.</p>
         <a class="/index" href="/">Back to Home</a>
+        <br>
+        <button onclick="window.history.back()" class="small-button">Back</button>
     </div>
 </body>
 
